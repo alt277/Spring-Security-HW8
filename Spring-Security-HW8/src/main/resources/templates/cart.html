@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Shop Homepage - Start Bootstrap Template</title>
+    <th:block th:replace="~{fragments/resources :: head/link}"></th:block>
+    <th:block th:replace="~{fragments/resources :: head/script}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/navigation :: store-navigation}"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="my-4">Корзина</h1>
+            <span th:if="${@cartService.orderEntries.isEmpty()}">Ваша корзина пуста!</span>
+            <table th:if="${!@cartService.orderEntries.isEmpty()}" class="table table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Название</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="orderEntry : ${@cartService.orderEntries}">
+                    <td th:text="${orderEntry.product.title}"/>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{'/cart/removeOne/' + ${orderEntry.product.id}}">-</a>
+                        <span th:text="${orderEntry.quantity}"/>
+                        <a class="btn btn-success" th:href="@{'/cart/add/' + ${orderEntry.product.id}}">+</a>
+                        <a class="btn btn-danger" th:href="@{'/cart/removeAll/' + ${orderEntry.product.id}}">X</a>
+                    </td>
+                    <td th:text="${orderEntry.quantity + ' x ' + orderEntry.basePrice + ' = ' + orderEntry.totalPrice}"/>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Итого:</td>
+                    <td th:text="${@cartService.totalPrice}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:if="${!@cartService.orderEntries.isEmpty()}">
+                <a class="btn btn-primary" th:href="@{/cart/createOrder}" th:text="#{text.cart.create}" sec:authorize="isAuthenticated()"></a>
+                <a class="btn btn-danger" th:href="@{/cart/clearCart}" th:text="#{text.cart.clear}"></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Shop Homepage - Start Bootstrap Template</title>
+    <th:block th:replace="~{fragments/resources :: head/link}"></th:block>
+    <th:block th:replace="~{fragments/resources :: head/script}"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/navigation :: store-navigation}"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 th:text="'Спасибо!'"></h2>
+                <h3 th:text="'Ваш заказ #' + ${order.code} + ', на сумму ' + ${order.totalPrice} + 'руб создан!'"></h3>
+                <h4 th:text="'В ближайшее время с вами свяжутся наши операторы!'"></h4>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

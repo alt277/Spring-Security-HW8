@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thymeleaf Fragments: home</title>
+    <!--/*/ <th:block th:include="fragments/general.html :: headerfiles"></th:block> /*/-->
+</head>
+<body>
+<p th:fragment="fragment2(title, name)">
+    Это фрагмент шаблона с параметрами: <span th:text="${'title= ' + title}"></span>
+    <span th:text="${'name= ' + name}"></span>
+</p>
+</body>
+</html>

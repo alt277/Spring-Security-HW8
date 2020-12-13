@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Spring-Security-HW8:war">
+    <output-path>$PROJECT_DIR$/Spring-Security-HW8/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Spring-Security-HW8</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Spring-Security-HW8-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Spring-Security-HW8:war exploded" />
+    </root>
+  </artifact>
+</component>

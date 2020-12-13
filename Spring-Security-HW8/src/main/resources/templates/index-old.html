@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Каталог товаров</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+<div class="container">
+    <div th:replace="~{fragments/navigation :: navigation(Index)}"/>
+    <h1>Главная страница</h1>
+
+    <br/>
+    <h4>Variable:</h4>
+    <div th:text="${name}"></div>
+
+    <br/>
+    <h4>For:</h4>
+    <div th:each="v : ${values}">
+        <p th:text="${v}"></p>
+    </div>
+
+    <br/>
+    <h4>Switch</h4>
+    <div th:switch="${userRole}">
+        <p th:case="'admin'">User is an administrator</p>
+        <p th:case="'manager'">User is a manager</p>
+        <p th:case="'staff'">User is a staff</p>
+        <p th:case="*">User is some other thing</p>
+    </div>
+
+    <br/>
+    <h4>Local variables</h4>
+    <!--/*@thymesVar id="firstName" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="lastName" type="java.lang.String"*/-->
+    <div th:with="firstName = 'Alena', lastName = 'Ivanova', fullName = ${firstName} +' ' + ${lastName}">
+        First Name: <span th:utext="${firstName}"></span>
+        <br>
+        Last Name: <span th:utext="${lastName}"></span>
+        <br>
+        Full Name: <span th:utext="${fullName}"></span>
+    </div>
+
+    <br/>
+    <h4>CSS</h4>
+    <br/>
+    <div th:class = "alert"
+           th:classappend ="${isPrimary} ? 'alert-primary' : 'alert-danger'">
+            Some Text
+    </div>
+
+    <br/>
+    <h4>Maps</h4>
+    <div>
+        <p th:text="${params[car]}"></p>
+        <p th:text="${params[bicycle]}"></p>
+    </div>
+
+    <br/>
+    <h4>Aggregates</h4>
+    <div>
+        <h5>avg</h5>
+        <span th:utext="${#aggregates.avg(values)}"></span>
+        <h4>sum</h4>
+        <span th:utext="${#aggregates.sum(values)}"></span>
+    </div>
+
+    <br/>
+    <h4>Fragments</h4>
+    <!--    ~{/path-to-template/template-name :: selector} -->
+    <div>
+        <span th:insert="~{fragments/fragment1 :: fragment1}"></span>
+        <span th:replace="~{fragments/fragment2 :: fragment2('TITLE','NAME')}"></span>
+    </div>
+</div>
+</body>

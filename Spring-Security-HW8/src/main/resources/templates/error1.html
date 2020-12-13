@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Каталог товаров</title>
+
+    <th:block th:replace="~{fragments/resources :: head/link}"></th:block>
+    <th:block th:replace="~{fragments/resources :: head/script}"></th:block>
+</head>
+
+<body>
+
+<div class="container">
+    <div th:replace="~{fragments/navigation :: navigation(Cart)}" />
+    <br>
+    <br>
+    <h1>Ой! Похоже на техническая ошибку</h1>
+    <h5>Не переживайте, мы ее уже чиним!</h5>
+</div>
+</body>
+</html>
