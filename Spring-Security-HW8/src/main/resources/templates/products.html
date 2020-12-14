@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8"/>
     <title>Каталог товаров</title>
@@ -57,7 +60,8 @@
             <td th:text="${{p.modifyDate}}"/>
             <td>
                 <a class="btn btn-success" th:href="@{'/cart/add/' + ${p.id}}">В корзину</a>
-                <a class="btn btn-danger" th:href="@{'/products/edit/' + ${p.id}}">Изменить</a>
+                <a class="btn btn-danger"  sec:authorize="hasAnyRole('ADMIN','SUPER_ADMIN')"
+                   th:href="@{'/products/edit/' + ${p.id}}">Изменить</a>
             </td>
         </tr>
         </tbody>

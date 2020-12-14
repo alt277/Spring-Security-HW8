@@ -1,14 +1,17 @@
 package com.example.SpringSecurityHW8.controllers;
 
-import com.example.SpringSecurityHW8.services.ProductService;
 import com.example.SpringSecurityHW8.entities.Order;
 import com.example.SpringSecurityHW8.entities.Product;
+import com.example.SpringSecurityHW8.entities.User;
 import com.example.SpringSecurityHW8.exceptions.ResourceNotFoundException;
 import com.example.SpringSecurityHW8.services.OrderService;
 import com.example.SpringSecurityHW8.services.ProductService;
+import com.example.SpringSecurityHW8.services.UserService;
 import com.example.SpringSecurityHW8.utils.OrderFilter;
 import com.example.SpringSecurityHW8.utils.ProductFilter;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Controller
@@ -27,13 +31,27 @@ public class AdminController {
 
     private ProductService productService;
     private OrderService orderService;
+    private UserService userService;
 
-    public AdminController(ProductService productService, OrderService orderService) {
+    public AdminController(ProductService productService, OrderService orderService, UserService userService) {
         this.productService = productService;
         this.orderService = orderService;
+        this.userService = userService;
     }
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
+    @GetMapping("/users")
+    public String allUsers(Model model,
+                           @RequestParam("page") Optional<Integer> page,
+                           @RequestParam("size") Optional<Integer> size) {
+
+        PageRequest pageRequest = PageRequest.of(page.orElse(1) - 1, size.orElse(4),
+                Sort.by("username").ascending());
+        model.addAttribute("userPage", userService.findAllUsers(pageRequest));
+        return "users";
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @GetMapping("/products")
     public String showAllProducts(Model model,
                                   @RequestParam(defaultValue = "1", name = "p") Integer page,
@@ -113,5 +131,25 @@ public class AdminController {
     ) {
         orderService.remove(id);
         return "redirect:/orders";
+    }
+
+    @PostMapping("/user/update")
+    public String updateUser(Model model, User user, BindingResult bindingResult,
+                             @RequestParam("page") Optional<Integer> page,
+                             @RequestParam("size") Optional<Integer> size) {
+
+        userService.save(user);
+        PageRequest pageRequest = PageRequest.of(page.orElse(1) - 1, size.orElse(4),
+                Sort.by("username").ascending());
+        model.addAttribute("userPage", userService.findAllUsers(pageRequest));
+
+        return "users";
+    }
+
+    @GetMapping("/new_user")
+    public String addUser(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "new_user";
     }
 }

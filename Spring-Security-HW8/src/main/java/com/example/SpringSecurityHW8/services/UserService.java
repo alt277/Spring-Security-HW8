@@ -5,6 +5,8 @@ import com.example.SpringSecurityHW8.data.UserData;
 import com.example.SpringSecurityHW8.entities.Role;
 import com.example.SpringSecurityHW8.entities.User;
 import com.example.SpringSecurityHW8.repositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,18 +39,22 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public User getCurrentUser(){
+    public Page<User> findAllUsers(Pageable pageable) {
+        return userRepository.findAllUsers(pageable);
+    }
+
+    public User getCurrentUser() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("userService = " + principal);
         System.out.println("userService name = " + principal.getName());
         return findByUsername(principal.getName());
     }
 
-    public User getOne(Long id){
+    public User getOne(Long id) {
         return userRepository.getOne(id);
     }
 
-    public User createUser(UserData userData){
+    public User createUser(UserData userData) {
         User user = new User();
         user.setName(userData.getName());
         user.setUsername(userData.getUsername());
@@ -58,7 +64,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public void authenticateUser(User user){
+    public void authenticateUser(User user) {
         List<Role> roles = user.getRoles().stream().distinct().collect(Collectors.toList());
         List<GrantedAuthority> authorities = roles.stream()
                 .map(p -> new SimpleGrantedAuthority(p.getName()))
@@ -81,5 +87,8 @@ public class UserService implements UserDetailsService {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
+    }
+    public void save(User user){
+        userRepository.save (user);
     }
 }

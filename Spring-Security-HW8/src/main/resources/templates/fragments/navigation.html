@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  >
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Store</title>
@@ -60,8 +61,11 @@
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
                         <a class="nav-link" th:href="@{/registration}">Зарегистрироваться</a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','SUPER_ADMIN')">
+                    <li class="nav-item" sec:authorize="hasAnyRole('MANAGER','ADMIN','SUPER_ADMIN')">
                         <a class="nav-link" th:href="@{/admin/orders}" th:text="${'All orders'}"></a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole( 'MANAGER','ADMIN','SUPER_ADMIN')">
+                        <a class="nav-link" th:href="@{/admin/users}" th:text="${'All users'}"></a>
                     </li>
                 </ul>
             </div>

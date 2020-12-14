@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
+    <title>Users - Start Bootstrap Template</title>
+    <th:block th:replace="~{fragments/resources :: head/link}"></th:block>
+    <th:block th:replace="~{fragments/resources :: head/script}"></th:block>
+</head>
+
+<body>
+<div th:replace="~{fragments/navigation :: store-navigation}"></div>
+<td>
+    <a class="btn btn-primary" th:href="@{/admin/new_user}">Create new user</a>
+</td>
+
+<div class="container">
+    <div class="row py-12 ">
+
+
+        <div class="col-12">            <!-- т.е. на все 12 колонок экрана (на всю активную ширину)-->
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col">username</th>
+                    <th scope="col">name</th>
+                    <th scope="col">address</th>
+                    <th scope="col">email</th>
+                    <th scope="col">phone</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="u : ${userPage}">
+
+                    <td th:text="${u.username}">username</td>
+                    <td th:text="${u.name}">name</td>
+                    <td th:text="${u.address}">address</td>
+                    <td th:text="${u.email}">email</td>
+                    <td th:text="${u.phone}">phone</td>
+
+
+                </tr>
+                </tbody>
+                <div class="col-12">
+                    <nav aria-label="...">
+                        <ul class="pagination">
+
+                            <li class="page-item" th:classappend="${ userPage.number==0} ? 'disabled' ">
+
+                                <a class="page-link" th:href="@{users( page=${userPage.number } )}" tabindex="-1">Previous</a>
+                            </li>
+                            <li th:each="num: ${#numbers.sequence(1, userPage.totalPages)}"
+                                class="page-item"
+                                th:classappend="${num == userPage.number + 1} ? 'active'">
+                                <a class="page-link"
+                                   th:text="${num}"
+                                   th:href="@{users(page=${num}, size=${userPage.size} )}">1</a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${userPage.isLast() ? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{users( page=${userPage.number+2 } )} ">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
