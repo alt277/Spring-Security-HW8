@@ -29,27 +29,27 @@
         <div class="col-12">            <!-- т.е. на все 12 колонок экрана (на всю активную ширину)-->
             <table class="table table-bordered my-2">
                 <thead>
-                <tr>
-                    <th scope="col">username</th>
-                    <th scope="col">name</th>
-                    <th scope="col">address</th>
-                    <th scope="col">email</th>
-                    <th scope="col">phone</th>
-
-                </tr>
+                    <tr>
+                        <th scope="col">username</th>
+                        <th scope="col">name</th>
+                        <th scope="col">address</th>
+                        <th scope="col">email</th>
+                        <th scope="col">phone</th>
+                        <th scope="col">role</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr th:each="u : ${userPage}">
-
-                    <td th:text="${u.username}">username</td>
-                    <td th:text="${u.name}">name</td>
-                    <td th:text="${u.address}">address</td>
-                    <td th:text="${u.email}">email</td>
-                    <td th:text="${u.phone}">phone</td>
-
-
-                </tr>
+                    <tr th:each= "u : ${userPage}">
+                        <td th:text="${u.username}">username</td>
+                        <td th:text="${u.name}">name</td>
+                        <td th:text="${u.address}">address</td>
+                        <td th:text="${u.email}">email</td>
+                        <td th:text="${u.phone}">phone</td>
+                        <td th:each="role : ${u.roles}"
+                                    th:text="${role.name}"></td>
+                    </tr>
                 </tbody>
+
                 <div class="col-12">
                     <nav aria-label="...">
                         <ul class="pagination">

@@ -137,8 +137,10 @@ public class AdminController {
     public String updateUser(Model model, User user, BindingResult bindingResult,
                              @RequestParam("page") Optional<Integer> page,
                              @RequestParam("size") Optional<Integer> size) {
-
-        userService.save(user);
+      User user1=new User();
+      user1.setName(user.getName());
+      user1.setRoles(user.getRoles());
+        userService.save(user1);
         PageRequest pageRequest = PageRequest.of(page.orElse(1) - 1, size.orElse(4),
                 Sort.by("username").ascending());
         model.addAttribute("userPage", userService.findAllUsers(pageRequest));
